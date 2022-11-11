@@ -42,7 +42,7 @@ function UserLogin()
       console.log(response)
       const data=await response.json()
       console.log(data)
-      if(data.auth=="auth success")
+      if(data.auth==="auth success")
       {
         dispatch(setBarcode1(data.firstbarcode));
         dispatch(setBarcode2(data.secondbarcode));
