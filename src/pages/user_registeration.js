@@ -46,7 +46,7 @@ function UserRegisteration() {
       }
 
       // const response = await fetch('https://express-backend123.herokuapp.com/api/register/user', myInit)
-      const response = await fetch('https://git.heroku.com/uvm-s.git/api/register/user', myInit)
+      const response = await fetch('https://git.heroku.com/api/register/user', myInit)
       if (!response.ok) {
         throw Error(response.statusText)
       }
