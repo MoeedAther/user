@@ -34,7 +34,7 @@ function UserLogin()
         body:JSON.stringify(inputs)
       }
 
-      const response=await fetch('https://uvm-server.herokuapp.com//api/auth/user', myInit)
+      const response=await fetch('https://uvm-server.herokuapp.com/api/auth/user', myInit)
       if(!response.ok)
       {
         throw Error(response.statusText)
