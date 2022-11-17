@@ -13,19 +13,6 @@ function deposit() {
 
             <Card className="header-solid h-full ant-card-p-0">
                 <div className="row">
-
-
-
-
-
-
-
-
-
-
-
-        
-
                 </div>
             </Card>
 

@@ -61,7 +61,7 @@ function UserLogin() {
         body: JSON.stringify(inputs)
       }
       console.log(inputs)
-      const response = await fetch('https://express-backend123.herokuapp.com/api/auth/user', myInit)
+      const response = await fetch('https://uvm-server.herokuapp.com/api/auth/user', myInit)
       // const response = await fetch('http://localhost:3001/api/auth/user', myInit)
       if (!response.ok) {
         throw Error(response.statusText)

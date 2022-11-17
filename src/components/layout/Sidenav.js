@@ -11,7 +11,7 @@
 */
 
 // import { useState } from "react";
-import { Menu, Button } from "antd";
+import { Menu, /*Button*/ } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 // import logo from "../../assets/images/logo.png";
 
@@ -64,27 +64,27 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const billing = [
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      key={0}
-    >
-      <path
-        d="M4 4C2.89543 4 2 4.89543 2 6V7H18V6C18 4.89543 17.1046 4 16 4H4Z"
-        fill={color}
-      ></path>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M18 9H2V14C2 15.1046 2.89543 16 4 16H16C17.1046 16 18 15.1046 18 14V9ZM4 13C4 12.4477 4.44772 12 5 12H6C6.55228 12 7 12.4477 7 13C7 13.5523 6.55228 14 6 14H5C4.44772 14 4 13.5523 4 13ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H10C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12H9Z"
-        fill={color}
-      ></path>
-    </svg>,
-  ];
+  // const billing = [
+  //   <svg
+  //     width="20"
+  //     height="20"
+  //     viewBox="0 0 20 20"
+  //     fill="none"
+  //     xmlns="http://www.w3.org/2000/svg"
+  //     key={0}
+  //   >
+  //     <path
+  //       d="M4 4C2.89543 4 2 4.89543 2 6V7H18V6C18 4.89543 17.1046 4 16 4H4Z"
+  //       fill={color}
+  //     ></path>
+  //     <path
+  //       fillRule="evenodd"
+  //       clipRule="evenodd"
+  //       d="M18 9H2V14C2 15.1046 2.89543 16 4 16H16C17.1046 16 18 15.1046 18 14V9ZM4 13C4 12.4477 4.44772 12 5 12H6C6.55228 12 7 12.4477 7 13C7 13.5523 6.55228 14 6 14H5C4.44772 14 4 13.5523 4 13ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H10C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12H9Z"
+  //       fill={color}
+  //     ></path>
+  //   </svg>,
+  // ];
 
   // const rtl = [
   //   <svg
@@ -203,7 +203,7 @@ function Sidenav({ color }) {
                 background: page === "billing" ? color : "",
               }}
             >
-              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAAB+ElEQVQ4je2UsWpUURCG/3/u3V2RQExcJTGIhaVgXsNKsPEBJIVcjhuzbyHCJsJNipDOzkYRIVr5ChHRziIqRnDdZDWE7O6981t4ld31xjR25m/mnJk5HzMDc4ATFeK4I03Ts5E0L8ncbCeE8KbsYZqmV8x9lqRXBoOthWazMxy34ctGqzVN6Y6iqIs43gWw/5ei9hHHu4qi7mG1urjRak0PB+PhS69WmwfwJEmSrWM6RQhhG8A2AKyurubF25elYElmZl60ekPSAcmrJF8DuEX3p07SpLbIewLuhxAeknR3H+l+BBy77/TdvwGAAecEdAlckPt7ABedrJOkAyBwmWQdALIs61SB7Ejw7Ubj7XEjKFOj0fg47rOyxH+hE/BvjWze8vLymVqlchMAHDhNSQBqIvskJyl9BwBJOcnzAL6iWKLeYPBoaWlpr7TiOI5nRG4mIawbcADgM8lZSjtwv+aAi5TIjoC7IpWEsJ5LzyqVytwwawRMco7kVFHxFwf2HPgEsy7MPpjUltQ2qQ3gnX5aRFFUBzAzUuQY2CUZAIQQHhfuF4V9PjbGzV8HSVbsTTm41uu9OqxWF9fW1iIAcPd28Sf8oTRNL5lZvci7bmYrR45iodnsnOr3HzDPJ5FlUwAmyqCFJpBlU8zzSTNbSZJk9y+5/7N+AKr42KQFYtlaAAAAAElFTkSuQmCC" />
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAAB+ElEQVQ4je2UsWpUURCG/3/u3V2RQExcJTGIhaVgXsNKsPEBJIVcjhuzbyHCJsJNipDOzkYRIVr5ChHRziIqRnDdZDWE7O6981t4ld31xjR25m/mnJk5HzMDc4ATFeK4I03Ts5E0L8ncbCeE8KbsYZqmV8x9lqRXBoOthWazMxy34ctGqzVN6Y6iqIs43gWw/5ei9hHHu4qi7mG1urjRak0PB+PhS69WmwfwJEmSrWM6RQhhG8A2AKyurubF25elYElmZl60ekPSAcmrJF8DuEX3p07SpLbIewLuhxAeknR3H+l+BBy77/TdvwGAAecEdAlckPt7ABedrJOkAyBwmWQdALIs61SB7Ejw7Ubj7XEjKFOj0fg47rOyxH+hE/BvjWze8vLymVqlchMAHDhNSQBqIvskJyl9BwBJOcnzAL6iWKLeYPBoaWlpr7TiOI5nRG4mIawbcADgM8lZSjtwv+aAi5TIjoC7IpWEsJ5LzyqVytwwawRMco7kVFHxFwf2HPgEsy7MPpjUltQ2qQ3gnX5aRFFUBzAzUuQY2CUZAIQQHhfuF4V9PjbGzV8HSVbsTTm41uu9OqxWF9fW1iIAcPd28Sf8oTRNL5lZvci7bmYrR45iodnsnOr3HzDPJ5FlUwAmyqCFJpBlU8zzSTNbSZJk9y+5/7N+AKr42KQFYtlaAAAAAElFTkSuQmCC"  alt="A"/>
             </span>
             <span className="label">Barcode</span>
           </NavLink>
@@ -218,7 +218,7 @@ function Sidenav({ color }) {
                 background: page === "deposit" ? color : "",
               }}
             >
-              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAACpElEQVQ4jbWUQWhUVxSGv3PfzDRGSDZCWnDRBER3XQnu2p2SjaGLNy+vhKBB304QKSjYkJU1GzfSWgpNSph57/rsRgey6KJk4aLduFRXRqKgGITkJUrGmfuOCwcZon2TRPyX95z/P/85954LnwmykyRVFWvtQYAgCJ6KiH6y8M0kOQNMKxzsHD0RmKmOj88V8UxRMEmSGYXfVfUfhZMKJ4ElhT+stdN7Ek7T9LDAZYXpIAwngUEDB9azbEpgBtWf6vX6oULhNE0HG41Gf3fAOTcGNLMsu1qv10cEbuRwvFKpeGtZdgVoeZ431s1pNBr9CwsL+wFMkiTnc+fWXm1ubtg4nuuqOASsRFHUKpfLTYU7Akf7+vq+iaKoheqKqH7VNbY/X21ublTK5Q1r7THjeV4NEV9hFpFTcRwPAeTwGBip1WoDqvq1wHCnQ5em6SAiIyryqNPxlwKTCrOi+r0x5l7J9/1V4FaSJKvAJRHZB9But2+VS6WfS8ZcF5HTKnLaGLMFrOTOzQNNY8xfnbH1dZ7X39UwXCq8vImJiWeInEXkh9y5fyXPx5xz43me/weMi+pZ3/efF17e/yEIgrpR/Q7VlwqXRPWiqK4qfFsNw6SIWyoKAvhheBc40StvOwodA8RxfGAnZ7sSTtN02Ii86Kw18G7FjciLNE2Hi7iFo/B9f9lae01Vb1hr11S1qfAr8Ivv+8t7dgxQrVZ/BGJUFwRuAkk1CM714vUUFhFdz7Ip4DZwez3Lpnbybb4fhafazkUQEW97UhRFLSAoKO6hiqfa/kC41Go9eFOpbKF6wVo7b5zLe7kCyD3PAFPAFqXS/ffFupOSJJkQ+A3oZ3d4LapRNQxrHxUGWFxc/CLLsiPGuZ7L03HcHhgYeDg6OtrcpZm94S1WDyRqU0BWgwAAAABJRU5ErkJggg=="></img>
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAACpElEQVQ4jbWUQWhUVxSGv3PfzDRGSDZCWnDRBER3XQnu2p2SjaGLNy+vhKBB304QKSjYkJU1GzfSWgpNSph57/rsRgey6KJk4aLduFRXRqKgGITkJUrGmfuOCwcZon2TRPyX95z/P/85954LnwmykyRVFWvtQYAgCJ6KiH6y8M0kOQNMKxzsHD0RmKmOj88V8UxRMEmSGYXfVfUfhZMKJ4ElhT+stdN7Ek7T9LDAZYXpIAwngUEDB9azbEpgBtWf6vX6oULhNE0HG41Gf3fAOTcGNLMsu1qv10cEbuRwvFKpeGtZdgVoeZ431s1pNBr9CwsL+wFMkiTnc+fWXm1ubtg4nuuqOASsRFHUKpfLTYU7Akf7+vq+iaKoheqKqH7VNbY/X21ublTK5Q1r7THjeV4NEV9hFpFTcRwPAeTwGBip1WoDqvq1wHCnQ5em6SAiIyryqNPxlwKTCrOi+r0x5l7J9/1V4FaSJKvAJRHZB9But2+VS6WfS8ZcF5HTKnLaGLMFrOTOzQNNY8xfnbH1dZ7X39UwXCq8vImJiWeInEXkh9y5fyXPx5xz43me/weMi+pZ3/efF17e/yEIgrpR/Q7VlwqXRPWiqK4qfFsNw6SIWyoKAvhheBc40StvOwodA8RxfGAnZ7sSTtN02Ii86Kw18G7FjciLNE2Hi7iFo/B9f9lae01Vb1hr11S1qfAr8Ivv+8t7dgxQrVZ/BGJUFwRuAkk1CM714vUUFhFdz7Ip4DZwez3Lpnbybb4fhafazkUQEW97UhRFLSAoKO6hiqfa/kC41Go9eFOpbKF6wVo7b5zLe7kCyD3PAFPAFqXS/ffFupOSJJkQ+A3oZ3d4LapRNQxrHxUGWFxc/CLLsiPGuZ7L03HcHhgYeDg6OtrcpZm94S1WDyRqU0BWgwAAAABJRU5ErkJggg==" alt="B"></img>
             </span>
             <span className="label">Deposit</span>
           </NavLink>
