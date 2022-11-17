@@ -10,6 +10,7 @@
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   Row,
@@ -42,8 +43,16 @@ import convesionImg5 from "../assets/images/face-2.jpg";
 import project1 from "../assets/images/home-decor-1.jpeg";
 import project2 from "../assets/images/home-decor-2.jpeg";
 import project3 from "../assets/images/home-decor-3.jpeg";
+import {useHistory} from "react-router-dom"
 
 function Profile() {
+  const navigate=useHistory()
+
+  //User Data
+  const fullname = useSelector((state) => state.userdata.fullname)
+  const email = useSelector((state) => state.userdata.email)
+  const phonenumber = useSelector((state) => state.userdata.phonenumber)
+
   const [imageURL, setImageURL] = useState(false);
   const [, setLoading] = useState(false);
 
@@ -163,7 +172,6 @@ function Profile() {
         className="profile-nav-bg"
         style={{ backgroundImage: "url(" + BgProfile + ")" }}
       ></div>
-
       <Card
         className="card-profile-head"
         bodyStyle={{ display: "none" }}
@@ -174,8 +182,7 @@ function Profile() {
                 <Avatar size={74} shape="square" src={profilavatar} />
 
                 <div className="avatar-info">
-                  <h4 className="font-semibold m-0">Sarah Jacob</h4>
-                  <p>CEO / Co-Founder</p>
+                  <h4 className="font-semibold m-0">{fullname}</h4>
                 </div>
               </Avatar.Group>
             </Col>
@@ -188,11 +195,7 @@ function Profile() {
                 justifyContent: "flex-end",
               }}
             >
-              <Radio.Group defaultValue="a">
-                <Radio.Button value="a">OVERVIEW</Radio.Button>
-                <Radio.Button value="b">TEAMS</Radio.Button>
-                <Radio.Button value="c">PROJECTS</Radio.Button>
-              </Radio.Group>
+              <button className="buttonsets" onClick={()=>{navigate.push("/")}}>Logout</button>
             </Col>
           </Row>
         }
@@ -250,23 +253,23 @@ function Profile() {
             extra={<Button type="link">{pencil}</Button>}
             bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}
           >
-            <p className="text-dark">
+            {/* <p className="text-dark">
               {" "}
               Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer
               is no. If two equally difficult paths, choose the one more painful
               in the short term (pain avoidance is creating an illusion of
               equality).{" "}
             </p>
-            <hr className="my-25" />
-            <Descriptions title="Oliver Liam">
+            <hr className="my-25" /> */}
+            <Descriptions title="">
               <Descriptions.Item label="Full Name" span={3}>
-                Sarah Emily Jacob
+                {fullname}
               </Descriptions.Item>
               <Descriptions.Item label="Mobile" span={3}>
-                (44) 123 1234 123
+                {phonenumber}
               </Descriptions.Item>
               <Descriptions.Item label="Email" span={3}>
-                sarahjacob@mail.com
+                {email}
               </Descriptions.Item>
               <Descriptions.Item label="Location" span={3}>
                 USA
@@ -312,7 +315,7 @@ function Profile() {
           </Card>
         </Col>
       </Row>
-      <Card
+      {/* <Card
         bordered={false}
         className="header-solid mb-24"
         title={
@@ -367,7 +370,7 @@ function Profile() {
             </Upload>
           </Col>
         </Row>
-      </Card>
+      </Card> */}
     </>
   );
 }

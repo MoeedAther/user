@@ -23,6 +23,7 @@ import UserRegisteration from "./pages/user_registeration";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
+import deposit from "./pages/deposit";
 
 function App() {
   return (
@@ -30,14 +31,16 @@ function App() {
       <Switch>
         {/* <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} /> */}
-        <Route path="/" exact component={UserLogin}/>
-        <Route path="/user-signup" exact component={UserRegisteration}/>
+        <Route path="/" exact component={UserLogin} />
+        <Route path="/user-signup" exact component={UserRegisteration} />
         <Main>
           <Route exact path="/dashboard" component={Home} />
           <Route exact path="/tables" component={Tables} />
           <Route exact path="/billing" component={Billing} />
           <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
+
+          <Route exact path="/deposit" component={deposit} />
           {/* <Redirect from="*" to="/" /> */}
         </Main>
       </Switch>

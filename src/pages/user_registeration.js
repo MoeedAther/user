@@ -1,29 +1,74 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import Footer from "../components/footer"
+
 // import axios from "axios"
 
 
 function UserRegisteration() {
 
-  //States
-  const navigate = useHistory()
-  const [firstname, setFirstname] = useState()
-  const [lastname, setLastname] = useState()
-  const [countrycode, setCountrycode] = useState()
-  const [email, setEmail] = useState()
-  const [phonenumber, setPhonenumber] = useState()
-  const [password, setPassword] = useState()
+  const navigate=useHistory()
+  const initialValues = { username: "", email: "", password: "" };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  
 
-  const inputs={
-    firstname:firstname,
-    lastname:lastname,
-    countrycode:countrycode,
-    email:email,
-    phonenumber:phonenumber,
-    password:password
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
   }
 
+  var inputs = {
+    firstname: formValues.firstname,
+    lastname: formValues.lastname,
+    countrycode: formValues.countrycode,
+    email: formValues.email,
+    phonenumber: formValues.phonenumber,
+    password: formValues.password
+  }
+  console.log(inputs)
+
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.firstname) {
+      errors.firstname = "Firstname is required!";
+      console.log(values.firstname)
+    }
+    if (!values.lastname) {
+      errors.lastname = "Lastname is required!";
+    }
+    if (!values.countrycode) {
+      errors.countrycode = "Select country Code!";
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!values.phonenumber) {
+      errors.phonenumber = "Phonenumber is required!";
+    }
+    if (!values.Register) {
+      errors.Register = "Select an option!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 4) {
+      errors.password = "Password must be more than 4 characters";
+    } else if (values.password.length > 10) {
+      errors.password = "Password cannot exceed more than 10 characters";
+    }
+    return errors;
+  };
   //form input Handler
   // const handleChange = (event) => {
   //   const name = event.target.name;
@@ -33,10 +78,11 @@ function UserRegisteration() {
 
 
   //form submission handler
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
     try {
-      event.preventDefault()
-      console.log(inputs)
       const myInit = {
         method: 'POST',
         headers: {
@@ -45,8 +91,8 @@ function UserRegisteration() {
         body: JSON.stringify(inputs)
       }
 
-      // const response = await fetch('https://express-backend123.herokuapp.com/api/register/user', myInit)
-      const response = await fetch('https://uvm-server.herokuapp.com//api/register/user', myInit)
+      const response = await fetch('https://express-backend123.herokuapp.com/api/register/user', myInit)
+      // const response = await fetch('http://localhost:3001/api/register/user', myInit)
       if (!response.ok) {
         throw Error(response.statusText)
       }
@@ -60,7 +106,9 @@ function UserRegisteration() {
     } catch (error) {
       console.log(error)
     }
+
   }
+
   return (
     <>
       <section className="mt-3">
@@ -83,24 +131,34 @@ function UserRegisteration() {
                     <i className="bi bi-facebook"></i>
                   </button>
                 </div>
-
+                <div className=" mt-4 justify-content-between align-items-center">
+                  <select value={formValues.Register} name="Register" onChange={handleChange} className="form-control form-control-lg color-grey1">
+                    <option value="" label="Register as" selected className="selectDefault">Register as</option>
+                    <option value="user">User</option>
+                    <option value="vendor">Vendor</option>
+                  </select>
+                  <label className="form-label" for="form3Example4">Register as </label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.Register}</p>
+                </div>
 
                 {/* First Name input */}
                 <div className="form-outline mb-4 mt-3">
                   <input type="text" className="form-control form-control-lg"
-                    placeholder="Enter first name" name="firstname" onChange={(e) => { setFirstname(e.target.value) }} />
+                    placeholder="Enter first name" value={formValues.firstname} name="firstname" onChange={handleChange} />
                   <label className="form-label" for="form3Example3">First Name</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.firstname}</p>
                 </div>
 
                 {/* Last Name input */}
                 <div className="form-outline mb-4">
                   <input type="text" className="form-control form-control-lg"
-                    placeholder="Enter last name" name="lastname" onChange={(e) => { setLastname(e.target.value) }} />
+                    placeholder="Enter last name" value={formValues.lastname} name="lastname" onChange={handleChange} />
                   <label className="form-label" for="form3Example3">Last Name</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.lastname}</p>
                 </div>
                 {/* Country */}
                 <div className="form-outline mb-4">
-                  <select className="form-control form-control-lg" onChange={(e) => { setCountrycode(e.target.value) }}>
+                  <select className="form-control form-control-lg color-grey1" value={formValues.countrycode} name="countrycode" onChange={handleChange}>
                     <option value="" label="Select Country" selected className="selectDefault">Select Country</option>
                     <option value="--">Not Specified</option>
                     <option value="AFG">Afghanistan</option>
@@ -357,39 +415,34 @@ function UserRegisteration() {
                     <option value="ZWE">Zimbabwe</option>
                   </select>
                   <label className="form-label" for="form3Example3">Country</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.countrycode}</p>
+
                 </div>
 
                 {/* Email input */}
                 <div className="form-outline mb-4">
                   <input type="email" className="form-control form-control-lg"
-                    placeholder="Enter a valid email address" name="email" onChange={(e) => { setEmail(e.target.value) }} />
+                    placeholder="Enter a valid email address" value={formValues.email} name="email" onChange={handleChange} />
                   <label className="form-label" for="form3Example3">Email</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.email}</p>
                 </div>
 
                 {/* Phone Number */}
                 <div className="form-outline mb-3">
                   <input type="text" className="form-control form-control-lg"
-                    placeholder="Enter mobile number" name="phonenumber" onChange={(e) => { setPhonenumber(e.target.value) }} />
+                    placeholder="Enter mobile number" value={formValues.phonenumber} name="phonenumber" onChange={handleChange} />
                   <label className="form-label" for="form3Example4">Moble Number</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.phonenumber}</p>
                 </div>
 
                 {/* Password input */}
                 <div className="form-outline mb-3">
                   <input type="password" className="form-control form-control-lg"
-                    placeholder="Enter password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
+                    placeholder="Enter password" value={formValues.password} name="password" onChange={handleChange} />
                   <label className="form-label" for="form3Example4">Password</label>
+                  <p style={{ color: "red", fontSize: "13px" }}>{formErrors.password}</p>
                 </div>
 
-                <div className="d-flex justify-content-between align-items-center">
-                  {/* Checkbox */}
-                  <div className="form-check mb-0">
-                    <input className="form-check-input me-2" type="checkbox" value="" />
-                    <label className="form-check-label" for="form2Example3">
-                      Remember me
-                    </label>
-                  </div>
-                  <a href="#!" className="text-body">Forgot password?</a>
-                </div>
 
                 <div className="text-center text-lg-start mt-4 pt-2">
                   <input type="submit" className="btn btn-primary btn-lg" style={{ paddingleft: '2.5rem', paddingright: '2.5rem' }} value="Register"></input>

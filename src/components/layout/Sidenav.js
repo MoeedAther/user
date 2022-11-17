@@ -194,6 +194,7 @@ function Sidenav({ color }) {
             <span className="label">Transations</span>
           </NavLink>
         </Menu.Item>
+       
         <Menu.Item key="3">
           <NavLink to="/billing">
             <span
@@ -202,9 +203,24 @@ function Sidenav({ color }) {
                 background: page === "billing" ? color : "",
               }}
             >
-              {billing}
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAAB+ElEQVQ4je2UsWpUURCG/3/u3V2RQExcJTGIhaVgXsNKsPEBJIVcjhuzbyHCJsJNipDOzkYRIVr5ChHRziIqRnDdZDWE7O6981t4ld31xjR25m/mnJk5HzMDc4ATFeK4I03Ts5E0L8ncbCeE8KbsYZqmV8x9lqRXBoOthWazMxy34ctGqzVN6Y6iqIs43gWw/5ei9hHHu4qi7mG1urjRak0PB+PhS69WmwfwJEmSrWM6RQhhG8A2AKyurubF25elYElmZl60ekPSAcmrJF8DuEX3p07SpLbIewLuhxAeknR3H+l+BBy77/TdvwGAAecEdAlckPt7ABedrJOkAyBwmWQdALIs61SB7Ejw7Ubj7XEjKFOj0fg47rOyxH+hE/BvjWze8vLymVqlchMAHDhNSQBqIvskJyl9BwBJOcnzAL6iWKLeYPBoaWlpr7TiOI5nRG4mIawbcADgM8lZSjtwv+aAi5TIjoC7IpWEsJ5LzyqVytwwawRMco7kVFHxFwf2HPgEsy7MPpjUltQ2qQ3gnX5aRFFUBzAzUuQY2CUZAIQQHhfuF4V9PjbGzV8HSVbsTTm41uu9OqxWF9fW1iIAcPd28Sf8oTRNL5lZvci7bmYrR45iodnsnOr3HzDPJ5FlUwAmyqCFJpBlU8zzSTNbSZJk9y+5/7N+AKr42KQFYtlaAAAAAElFTkSuQmCC" />
             </span>
             <span className="label">Barcode</span>
+          </NavLink>
+        </Menu.Item>
+
+
+        <Menu.Item key="11">
+          <NavLink to="/deposit">
+            <span
+              className="icon"
+              style={{
+                background: page === "deposit" ? color : "",
+              }}
+            >
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABmJLR0QA/wD/AP+gvaeTAAACpElEQVQ4jbWUQWhUVxSGv3PfzDRGSDZCWnDRBER3XQnu2p2SjaGLNy+vhKBB304QKSjYkJU1GzfSWgpNSph57/rsRgey6KJk4aLduFRXRqKgGITkJUrGmfuOCwcZon2TRPyX95z/P/85954LnwmykyRVFWvtQYAgCJ6KiH6y8M0kOQNMKxzsHD0RmKmOj88V8UxRMEmSGYXfVfUfhZMKJ4ElhT+stdN7Ek7T9LDAZYXpIAwngUEDB9azbEpgBtWf6vX6oULhNE0HG41Gf3fAOTcGNLMsu1qv10cEbuRwvFKpeGtZdgVoeZ431s1pNBr9CwsL+wFMkiTnc+fWXm1ubtg4nuuqOASsRFHUKpfLTYU7Akf7+vq+iaKoheqKqH7VNbY/X21ublTK5Q1r7THjeV4NEV9hFpFTcRwPAeTwGBip1WoDqvq1wHCnQ5em6SAiIyryqNPxlwKTCrOi+r0x5l7J9/1V4FaSJKvAJRHZB9But2+VS6WfS8ZcF5HTKnLaGLMFrOTOzQNNY8xfnbH1dZ7X39UwXCq8vImJiWeInEXkh9y5fyXPx5xz43me/weMi+pZ3/efF17e/yEIgrpR/Q7VlwqXRPWiqK4qfFsNw6SIWyoKAvhheBc40StvOwodA8RxfGAnZ7sSTtN02Ii86Kw18G7FjciLNE2Hi7iFo/B9f9lae01Vb1hr11S1qfAr8Ivv+8t7dgxQrVZ/BGJUFwRuAkk1CM714vUUFhFdz7Ip4DZwez3Lpnbybb4fhafazkUQEW97UhRFLSAoKO6hiqfa/kC41Go9eFOpbKF6wVo7b5zLe7kCyD3PAFPAFqXS/ffFupOSJJkQ+A3oZ3d4LapRNQxrHxUGWFxc/CLLsiPGuZ7L03HcHhgYeDg6OtrcpZm94S1WDyRqU0BWgwAAAABJRU5ErkJggg=="></img>
+            </span>
+            <span className="label">Deposit</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="4">
@@ -249,23 +265,7 @@ function Sidenav({ color }) {
           </NavLink> */}
         </Menu.Item>
       </Menu>
-      <div className="aside-footer">
-        <div
-          className="footer-box"
-          style={{
-            background: color,
-          }}
-        >
-          <span className="icon" style={{ color }}>
-            {dashboard}
-          </span>
-          <h6>Need Help?</h6>
-          <p>Please check our docs</p>
-          <Button type="primary" className="ant-btn-sm ant-btn-block">
-            DOCUMENTATION
-          </Button>
-        </div>
-      </div>
+    
     </>
   );
 }

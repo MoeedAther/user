@@ -1,3 +1,51 @@
 .selectDefault{
     color:rgb(108, 117, 125)
 }
+.buttonsets{
+    border: 1px solid #40a9ff;
+    height: auto;
+    font-weight: 700;
+    padding: 0 15px;
+    line-height: 40px;
+    color: #655454;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: white;
+}
+.middlebutton{
+    background: white;
+    color: black;
+    font-weight: 600;
+    font-size: 12px;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    border-color: #ece5e5;
+}
+.leftbutton{
+    background: white;
+    color: black;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 7%);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border: 1px solid;
+    font-weight: 600;
+    font-size: 12px;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    border-color: #ece5e5;
+}
+.middlebutton:focus{
+    box-shadow: none !important;
+}
+.height{
+    bottom: -47px !important;
+    position: absolute;
+    width: 100%;
+}
+@media screen and (max-width: 984px) {
+    .height {
+      position: initial  !important;
+    }
+  }

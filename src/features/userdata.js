@@ -3,24 +3,28 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userdataSlice = createSlice({
     name: 'userdata',
     initialState: {
-        value: {
-            firstname: "",
-            lastname: "",
-            phonenumber: "",
-            email: ""
-        },
+        fullname:null,
+        email:null,
+        phonenumber:null,
+        accountbalance:null
     },
     reducers: {
-        setBarcode1: (state, action) => {
-            state.barcode1 = action.payload
+        setFullName: (state, action) => {
+            state.fullname=action.payload
         },
-        setBarcode2: (state, action) => {
-            state.barcode2 = action.payload
+        setEmail: (state, action) => {
+            state.email=action.payload
+        },        
+        setPhonenumber: (state, action) => {
+            state.phonenumber=action.payload
         },
+        setAccountBalance:(state,action)=>{
+            state.accountbalance=action.payload
+        }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { setBarcode1, setBarcode2 } = barcodeSlice.actions
+export const { setFullName,setEmail,setPhonenumber,setAccountBalance} = userdataSlice.actions
 
-export default barcodeSlice.reducer
+export default userdataSlice.reducer

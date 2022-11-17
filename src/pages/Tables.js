@@ -62,26 +62,36 @@ const formProps = {
 // table code start
 const columns = [
   {
-    title: "AUTHOR",
+    title: "PRODUCT NAME",
     dataIndex: "name",
     key: "name",
     width: "32%",
   },
   {
-    title: "FUNCTION",
+    title: "PRODUCT CATEGORY",
     dataIndex: "function",
     key: "function",
   },
 
   {
-    title: "STATUS",
+    title: "UNIT PRICE",
     key: "status",
     dataIndex: "status",
   },
   {
-    title: "EMPLOYED",
-    key: "employed",
-    dataIndex: "employed",
+    title: "UNITS PURCHASED",
+    dataIndex: "function",
+    key: "function",
+  },
+  {
+    title: "PURCHASE TIME",
+    dataIndex: "function",
+    key: "function",
+  },
+  {
+    title: "TOTAL AMOUNT",
+    dataIndex: "function",
+    key: "function",
   },
 ];
 
