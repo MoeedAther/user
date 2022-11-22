@@ -140,7 +140,7 @@ function UserLogin() {
                 </div>
 
                 <div className="text-center text-lg-start mt-5  pt-2">
-                  <input type="submit" className="btn btn-primary btn-lg" style={{ paddingleft: '2.5rem', paddingright: '2.5rem' }} value="Loin" />
+                  <input type="submit" className="btn btn-primary btn-lg" style={{ paddingleft: '2.5rem', paddingright: '2.5rem' }} value="Login" />
                   <p className="small fw-bold mt-2 pt-1 mb-4">Don't have an account? <Link to="/user-signup"
                     className="link-danger">Register</Link></p>
                 </div>
