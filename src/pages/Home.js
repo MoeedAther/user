@@ -9,7 +9,7 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 
 
@@ -50,7 +50,8 @@ import card from "../assets/images/info-card-1.jpg";
 
 
 function Home() {
-  const useraccountbalance = useSelector((state) => state.userdata.accountbalance)
+  let useraccountbalance = useSelector((state) => state.userdata.accountbalance)
+
   const { Title, Text } = Typography;
 
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
@@ -145,28 +146,28 @@ function Home() {
   // ];
   const count = [
     {
-      today: "Sales This Month",
-      title: "$53,000",
+      today: "Spending Per Month",
+      title: "$53K",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhUlEQVRIie2U0QmAMAxEE3EMcRIdQAdxUXGSDPL8ESmlasUWKfR9hssduY+I/AWwAWsqXWgRgK+6xhPPgLkLPODpDJhcT/UCTES6iAPvMFXtrwIeK4lBVU/f5k6YguwBbWjonviGUMXlV1QDakCpAcDw1ggYQ/Ps79q/YBER+2J+eFTi2QH5gHBCJs9nEQAAAABJRU5ErkJggg==" alt="C"></img>,
       bnb: "bnb2",
     },
     {
-      today: "Today’s Sales",
-      title: "300",
+      today: "Today’s Spending",
+      title: "$300",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABmJLR0QA/wD/AP+gvaeTAAAB1klEQVRIie2VPUsdQRiFn1GDWN1bWAmKWFl6SRGCQhBJpyAXQf0DNsYmXUiCRQhikcrGFCFBRQW/KgutFESNHyEQK0FMIEmRJmqlWByLfU3GvbvrLlqJLyyzzJ6ZZ86ZmXvhvjKUyyKW9AD4CDy+RvrTOfck82oklUuaUro69MdWZHAwDRSBM2AE+BUhrQWehzuvhUgqB8YMcA4MA9sx8sj4y1IAJoAeAwyFADmClTclzRPrJAUAoBFoBQR8jZsr0okBxkOA30AfUO1Jt4A3wIckJyUQD9AbctAGdADNvtxAJ0mQK3HZKZoEughO0RCwa58XgD/ASsJ8NYkQSRUxgBagzhtTtHYf2PH6HwID9r4euQRJ7+winUoalNRuz1rMhVv0NIM2TpLmLJFSJ0CntZ/4HxHAF+A4Yl17noMXQCUwD/Q4587jIBtAA9ANfAN+WP+ytVVAgeAQXE7iA+aA3jDgSknKS9oyy38l9XtxtEuatm/vIyKaDUfk178j7Jw7Ap4Cn4E88Bao97TrwCrBZheyOCj5rZGUA5aARwR78Qr47kkKwMvUEcWVpJykTYviSNIzi+h12ojSgsJ7NOoBZm4MiHGkW3MQAcpLGpd0YBc21R/d3awLA2aO47fqtNIAAAAASUVORK5CYII=" alt="D"/>,
       bnb: "bnb2",
     },
-    {
-      today: "Total Products",
-      title: "+1,200",
-      icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAA5ElEQVRIie2UPw6BQRDFfw83IAoHcANCaFzAmRyARsktXEBDwxW0KhR0EskofBLWLutv8iVeNzMv8ybzdhbSDl0GZlYFWgFuDjhE9BxLmoUE1kD+ySFdbCQVvBU7oePJd8zMnuUBZN6c9iG+LuB6sAL8+wMkKeFZiAOsJBXPQc4p1oAFMAUmF/km0HC4IU79jrjfwBiTfQbDDzxwVxTCBm52v/6kwIDTgygl8RIYfkxA0h7oRw5zhfQf2l/gJYEdUDazbGyThFsGtjHknr2OrttPHgEBbaBC/CEegDkwknTvp00hjoSQrN7Qc9Y0AAAAAElFTkSuQmCC" alt="E"></img>,
-      bnb: "redtext",
-    },
+    // {
+    //   today: "Total Products",
+    //   title: "+1.2k",
+    //   icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAA5ElEQVRIie2UPw6BQRDFfw83IAoHcANCaFzAmRyARsktXEBDwxW0KhR0EskofBLWLutv8iVeNzMv8ybzdhbSDl0GZlYFWgFuDjhE9BxLmoUE1kD+ySFdbCQVvBU7oePJd8zMnuUBZN6c9iG+LuB6sAL8+wMkKeFZiAOsJBXPQc4p1oAFMAUmF/km0HC4IU79jrjfwBiTfQbDDzxwVxTCBm52v/6kwIDTgygl8RIYfkxA0h7oRw5zhfQf2l/gJYEdUDazbGyThFsGtjHknr2OrttPHgEBbaBC/CEegDkwknTvp00hjoSQrN7Qc9Y0AAAAAElFTkSuQmCC" alt="E"></img>,
+    //   bnb: "redtext",
+    // },
     {
       today: "Balance",
-      title: useraccountbalance,
+      title: "$5.2k",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie2TvW0CQRCFZyxEAwQ2EiI3uBFwDBWQ0AUhfdCHqYLQCXcX0APW52RWWq3273QgJ37SSnvz5uZv34j8oxbAGmgYjgZYubjqJWhEZPagehtVnYcdADA0chjnZWjAEka5SmJ2VdUY7+wh/q6DVEW1vMMzOviOWsPX94WdigR8Am2o/Ucm8BfzGvPxFw2R/Gz77omq6tNVlEyQGNGHd19qgJDPJkhgIyI/drY1fN83uIjIzT6nqvpezVcoZmkuezsAi1o+lJyPnfEH4A68Aa92P3j/Z3kBVsA1kmDi2gfOnv+XjURq+CKALpK8LfF9VHQq2Ep8HsAYOFqlnd3HJf4XS1zlT6Tg48EAAAAASUVORK5CYII=" alt="F"/>,
       bnb: "bnb2",
     },
@@ -390,7 +391,7 @@ function Home() {
 
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={12} lg={12} xl={16} className="mb-24">
-            <Card bordered={false} className="criclebox cardbody h-full">
+            {/* <Card bordered={false} className="criclebox cardbody h-full">
               <div className="project-ant">
                 <div>
                   <Title level={5}>Projects</Title>
@@ -456,10 +457,10 @@ function Home() {
                   </Button>
                 </Upload>
               </div>
-            </Card>
+            </Card> */}
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={8} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
+            {/* <Card bordered={false} className="criclebox h-full">
               <div className="timeline-box">
                 <Title level={5}>Orders History</Title>
                 <Paragraph className="lastweek" style={{ marginBottom: 24 }}>
@@ -486,13 +487,13 @@ function Home() {
                   {<MenuUnfoldOutlined />} REVERSE
                 </Button>
               </div>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
 
         <Row gutter={[24, 0]}>
           <Col xs={24} md={12} sm={24} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
+            {/* <Card bordered={false} className="criclebox h-full">
               <Row gutter>
                 <Col
                   xs={24}
@@ -532,11 +533,11 @@ function Home() {
                   </div>
                 </Col>
               </Row>
-            </Card>
+            </Card> */}
           </Col>
 
           <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox card-info-2 h-full">
+            {/* <Card bordered={false} className="criclebox card-info-2 h-full">
               <div className="gradent h-full col-content">
                 <div className="card-content">
                   <Title level={5}>Work with the best</Title>
@@ -552,7 +553,7 @@ function Home() {
                   </a>
                 </div>
               </div>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
       </div>
