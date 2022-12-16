@@ -610,7 +610,7 @@ function Tables() {
           },
           // body: JSON.stringify(depositObj)
         }
-        const response = await fetch('http://localhost:3001/api/usertransactions', myInit)
+        const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/usertransactions', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }

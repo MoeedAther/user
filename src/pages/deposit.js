@@ -25,7 +25,7 @@ function Deposit() {
           },
           body: JSON.stringify(depositObj)
         }
-        const response = await fetch('http://localhost:3001/api/deposit', myInit)
+        const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/deposit', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }
