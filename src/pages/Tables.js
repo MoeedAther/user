@@ -25,6 +25,7 @@ import {
 
 import { ToTopOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import {useState, useEffect} from "react"
 
 // Images
 import ava1 from "../assets/images/logo-shopify.svg";
@@ -597,75 +598,78 @@ const dataproject = [
 ];
 
 function Tables() {
-  const onChange = (e) => console.log(`radio checked:${e.target.value}`);
+  const [transactions,setTransactions]=useState([])
+
+  useEffect(()=>{ // useEffect lifecycle method runs after final render is completed in DOM
+    async function getAllTransactions(){
+      try {
+        const myInit = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          // body: JSON.stringify(depositObj)
+        }
+        const response = await fetch('http://localhost:3001/api/usertransactions', myInit)
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        const data = await response.json()
+        setTransactions(data.transactions) // Withdraws objects from responce array and stores them in users state
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getAllTransactions()
+  },[])
 
   return (
     <>
-      <div className="tabled">
+     <div className="tabled">
         <Row gutter={[24, 0]}>
           <Col xs="24" xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Authors Table"
+              title="Transactions"
               extra={
                 <>
-                  <Radio.Group onChange={onChange} defaultValue="a">
+                  {/* <Radio.Group onChange={onChange} defaultValue="a">
                     <Radio.Button value="a">All</Radio.Button>
                     <Radio.Button value="b">ONLINE</Radio.Button>
-                  </Radio.Group>
+                  </Radio.Group> */}
                 </>
               }
             >
-              <div className="table-responsive">
-                <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  className="ant-border-space"
-                />
-              </div>
+              <table className="table align-middle mb-0 bg-white">
+                <thead className="bg-light">
+                  <tr>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Unit Price</th>
+                    <th>Units Purchased</th>
+                    <th>Time</th>
+                    <th>Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    transactions.map((item) => {
+                       return (<tr><td>{item.uproductbarcode}</td><td>{item.uproductname}</td><td>{item.uproductcategory}</td><td>{item.uunitprice}</td><td>{item.uunitspurchased}</td><td>{item.upurchasetime}</td><td>{item.utotalamount}</td></tr>)
+                     })
+
+                   }
+                </tbody>
+              </table>
             </Card>
 
-            <Card
-              bordered={false}
-              className="criclebox tablespace mb-24"
-              title="Projects Table"
-              extra={
-                <>
-                  <Radio.Group onChange={onChange} defaultValue="all">
-                    <Radio.Button value="all">All</Radio.Button>
-                    <Radio.Button value="online">ONLINE</Radio.Button>
-                    <Radio.Button value="store">STORES</Radio.Button>
-                  </Radio.Group>
-                </>
-              }
-            >
-              <div className="table-responsive">
-                <Table
-                  columns={project}
-                  dataSource={dataproject}
-                  pagination={false}
-                  className="ant-border-space"
-                />
-              </div>
-              <div className="uploadfile pb-15 shadow-none">
-                <Upload {...formProps}>
-                  <Button
-                    type="dashed"
-                    className="ant-full-box"
-                    icon={<ToTopOutlined />}
-                  >
-                    Click to Upload
-                  </Button>
-                </Upload>
-              </div>
-            </Card>
           </Col>
         </Row>
       </div>
-    </>
-  );
+    
+ </>
+)
 }
 
 export default Tables;

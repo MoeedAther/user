@@ -6,7 +6,7 @@ export const userdataSlice = createSlice({
         fullname:null,
         email:null,
         phonenumber:null,
-        accountbalance:null
+        accountbalance:0
     },
     reducers: {
         setFullName: (state, action) => {

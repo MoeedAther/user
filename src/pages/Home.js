@@ -9,7 +9,7 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 
@@ -47,10 +47,46 @@ import team2 from "../assets/images/team-2.jpg";
 import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
+import axios from "axios"
 
 
 function Home() {
-  let useraccountbalance = useSelector((state) => state.userdata.accountbalance)
+  const [userBalance, setUserBalance] = useState()
+  let useremail = useSelector((state) => state.userdata.email)
+  const useremailObj = {
+    email: useremail
+  }
+
+  useEffect(() => { // useEffect lifecycle method runs after final render is completed in DOM
+    async function getUserInfo() {
+      try {
+        const myInit = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(useremailObj)
+        }
+        const response = await fetch('http://localhost:3001/api/userinfo', myInit)
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        const data = await response.json()
+
+        //Balance "K" formitter
+        function kFormatter(num) {
+          return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+        }
+
+        setUserBalance(kFormatter(data.balance))
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUserInfo()
+  }, [])
+
 
   const { Title, Text } = Typography;
 
@@ -156,7 +192,7 @@ function Home() {
       today: "Today’s Spending",
       title: "$300",
       persent: "",
-      icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABmJLR0QA/wD/AP+gvaeTAAAB1klEQVRIie2VPUsdQRiFn1GDWN1bWAmKWFl6SRGCQhBJpyAXQf0DNsYmXUiCRQhikcrGFCFBRQW/KgutFESNHyEQK0FMIEmRJmqlWByLfU3GvbvrLlqJLyyzzJ6ZZ86ZmXvhvjKUyyKW9AD4CDy+RvrTOfck82oklUuaUro69MdWZHAwDRSBM2AE+BUhrQWehzuvhUgqB8YMcA4MA9sx8sj4y1IAJoAeAwyFADmClTclzRPrJAUAoBFoBQR8jZsr0okBxkOA30AfUO1Jt4A3wIckJyUQD9AbctAGdADNvtxAJ0mQK3HZKZoEughO0RCwa58XgD/ASsJ8NYkQSRUxgBagzhtTtHYf2PH6HwID9r4euQRJ7+winUoalNRuz1rMhVv0NIM2TpLmLJFSJ0CntZ/4HxHAF+A4Yl17noMXQCUwD/Q4587jIBtAA9ANfAN+WP+ytVVAgeAQXE7iA+aA3jDgSknKS9oyy38l9XtxtEuatm/vIyKaDUfk178j7Jw7Ap4Cn4E88Bao97TrwCrBZheyOCj5rZGUA5aARwR78Qr47kkKwMvUEcWVpJykTYviSNIzi+h12ojSgsJ7NOoBZm4MiHGkW3MQAcpLGpd0YBc21R/d3awLA2aO47fqtNIAAAAASUVORK5CYII=" alt="D"/>,
+      icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABmJLR0QA/wD/AP+gvaeTAAAB1klEQVRIie2VPUsdQRiFn1GDWN1bWAmKWFl6SRGCQhBJpyAXQf0DNsYmXUiCRQhikcrGFCFBRQW/KgutFESNHyEQK0FMIEmRJmqlWByLfU3GvbvrLlqJLyyzzJ6ZZ86ZmXvhvjKUyyKW9AD4CDy+RvrTOfck82oklUuaUro69MdWZHAwDRSBM2AE+BUhrQWehzuvhUgqB8YMcA4MA9sx8sj4y1IAJoAeAwyFADmClTclzRPrJAUAoBFoBQR8jZsr0okBxkOA30AfUO1Jt4A3wIckJyUQD9AbctAGdADNvtxAJ0mQK3HZKZoEughO0RCwa58XgD/ASsJ8NYkQSRUxgBagzhtTtHYf2PH6HwID9r4euQRJ7+winUoalNRuz1rMhVv0NIM2TpLmLJFSJ0CntZ/4HxHAF+A4Yl17noMXQCUwD/Q4587jIBtAA9ANfAN+WP+ytVVAgeAQXE7iA+aA3jDgSknKS9oyy38l9XtxtEuatm/vIyKaDUfk178j7Jw7Ap4Cn4E88Bao97TrwCrBZheyOCj5rZGUA5aARwR78Qr47kkKwMvUEcWVpJykTYviSNIzi+h12ojSgsJ7NOoBZm4MiHGkW3MQAcpLGpd0YBc21R/d3awLA2aO47fqtNIAAAAASUVORK5CYII=" alt="D" />,
       bnb: "bnb2",
     },
     // {
@@ -167,8 +203,8 @@ function Home() {
     // },
     {
       today: "Balance",
-      title: "$5.2k",
-      icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie2TvW0CQRCFZyxEAwQ2EiI3uBFwDBWQ0AUhfdCHqYLQCXcX0APW52RWWq3273QgJ37SSnvz5uZv34j8oxbAGmgYjgZYubjqJWhEZPagehtVnYcdADA0chjnZWjAEka5SmJ2VdUY7+wh/q6DVEW1vMMzOviOWsPX94WdigR8Am2o/Ucm8BfzGvPxFw2R/Gz77omq6tNVlEyQGNGHd19qgJDPJkhgIyI/drY1fN83uIjIzT6nqvpezVcoZmkuezsAi1o+lJyPnfEH4A68Aa92P3j/Z3kBVsA1kmDi2gfOnv+XjURq+CKALpK8LfF9VHQq2Ep8HsAYOFqlnd3HJf4XS1zlT6Tg48EAAAAASUVORK5CYII=" alt="F"/>,
+      title: "$" + userBalance,
+      icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie2TvW0CQRCFZyxEAwQ2EiI3uBFwDBWQ0AUhfdCHqYLQCXcX0APW52RWWq3273QgJ37SSnvz5uZv34j8oxbAGmgYjgZYubjqJWhEZPagehtVnYcdADA0chjnZWjAEka5SmJ2VdUY7+wh/q6DVEW1vMMzOviOWsPX94WdigR8Am2o/Ucm8BfzGvPxFw2R/Gz77omq6tNVlEyQGNGHd19qgJDPJkhgIyI/drY1fN83uIjIzT6nqvpezVcoZmkuezsAi1o+lJyPnfEH4A68Aa92P3j/Z3kBVsA1kmDi2gfOnv+XjURq+CKALpK8LfF9VHQq2Ep8HsAYOFqlnd3HJf4XS1zlT6Tg48EAAAAASUVORK5CYII=" alt="F" />,
       bnb: "bnb2",
     },
   ];
