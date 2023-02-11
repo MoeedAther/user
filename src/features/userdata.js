@@ -6,7 +6,9 @@ export const userdataSlice = createSlice({
         fullname:null,
         email:null,
         phonenumber:null,
-        accountbalance:0
+        accountbalance:0,
+        accswitch:"user",
+        token:null
     },
     reducers: {
         setFullName: (state, action) => {
@@ -20,11 +22,17 @@ export const userdataSlice = createSlice({
         },
         setAccountBalance:(state,action)=>{
             state.accountbalance=action.payload
+        },
+        setAccSwitch:(state,action)=>{
+            state.accswitch=action.payload
+        },
+        setToken:(state,action)=>{
+            state.token=action.payload
         }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { setFullName,setEmail,setPhonenumber,setAccountBalance} = userdataSlice.actions
+export const { setFullName,setEmail,setPhonenumber,setAccountBalance,setAccSwitch,setToken} = userdataSlice.actions
 
 export default userdataSlice.reducer

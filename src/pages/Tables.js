@@ -26,6 +26,9 @@ import {
 import { ToTopOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import {useState, useEffect} from "react"
+import {useHistory} from "react-router-dom"
+import { useSelector } from "react-redux";
+
 
 // Images
 import ava1 from "../assets/images/logo-shopify.svg";
@@ -598,6 +601,48 @@ const dataproject = [
 ];
 
 function Tables() {
+
+  const navigate=useHistory()
+  const token= useSelector((state) => state.userdata.token)
+  const token_obj={
+      token:token
+  }
+
+  //................................................................Verify User...........................................................................
+  useEffect(()=>{
+
+    if(token==null){
+      navigate.push("/")
+    }
+
+      const verify_user=async()=>{
+              try {
+                const myInit = {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(token_obj)
+                }
+                const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
+                // const response = await fetch('http://localhost:3001/api/token', myInit)
+                if (!response.ok) {
+                  throw Error(response.statusText)
+                }
+                const data = await response.json()
+                console.log(data)
+                if(data.message==="Verification Unsuccessful")
+                {
+                  navigate.push('/')
+                }
+               
+              } catch (error) {
+                console.log(error)
+              }
+            }
+      verify_user()
+  },[])
+  
   const [transactions,setTransactions]=useState([])
 
   useEffect(()=>{ // useEffect lifecycle method runs after final render is completed in DOM
@@ -611,6 +656,7 @@ function Tables() {
           // body: JSON.stringify(depositObj)
         }
         const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/usertransactions', myInit)
+        // const response = await fetch('http://localhost:3001/api/usertransactions', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }
@@ -645,18 +691,18 @@ function Tables() {
                 <thead className="bg-light">
                   <tr>
                     <th>Barcode</th>
+                    <th>Time</th>
                     <th>Name</th>
                     <th>Category</th>
                     <th>Unit Price</th>
                     <th>Units Purchased</th>
-                    <th>Time</th>
                     <th>Total Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {
                     transactions.map((item) => {
-                       return (<tr><td>{item.uproductbarcode}</td><td>{item.uproductname}</td><td>{item.uproductcategory}</td><td>{item.uunitprice}</td><td>{item.uunitspurchased}</td><td>{item.upurchasetime}</td><td>{item.utotalamount}</td></tr>)
+                       return (<tr><td>{item.uproductbarcode}</td><td>{item.upurchasetime}</td><td>{item.uproductname}</td><td>{item.uproductcategory}</td><td>{item.uunitprice}</td><td>{item.uunitspurchased}</td><td>{item.upurchasetime}</td><td>{item.utotalamount}</td></tr>)
                      })
 
                    }

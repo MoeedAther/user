@@ -258,12 +258,12 @@ function Sidenav({ color }) {
             <span className="label">Sign In</span> */}
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="8">
-          {/* <NavLink to="/sign-up">
+        {/* <Menu.Item key="8">
+          <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
             <span className="label">Sign Up</span>
-          </NavLink> */}
-        </Menu.Item>
+          </NavLink>
+        </Menu.Item> */}
       </Menu>
     
     </>

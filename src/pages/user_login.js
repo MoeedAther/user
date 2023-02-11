@@ -3,7 +3,7 @@ import Footer from "../components/footer";
 import { Link, useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setBarcode1, setBarcode2 } from "../features/barcode"
-import{setFullName, setEmail, setPhonenumber, setAccountBalance} from "../features/userdata"
+import{setFullName, setEmail, setPhonenumber, setAccountBalance, setToken} from "../features/userdata"
 
 function UserLogin() {
   const navigate = useHistory()
@@ -12,6 +12,7 @@ function UserLogin() {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +63,7 @@ function UserLogin() {
       }
       console.log(inputs)
       const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/auth/user', myInit)
+      // const response = await fetch('http://localhost:3001/api/auth/user', myInit)
       if (!response.ok) {
         throw Error(response.statusText)
       }
@@ -75,6 +77,8 @@ function UserLogin() {
         dispatch(setEmail(data.userinfo.remail));
         dispatch(setPhonenumber(data.userinfo.rphonenumber));
         dispatch(setAccountBalance(data.userinfo.raccountbalance))
+        dispatch(setToken(data.userinfo.rtoken))
+        console.log(data.userinfo.rtoken)
         navigate.push('/dashboard')
       }
     } catch (error) {

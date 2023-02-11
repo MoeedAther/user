@@ -4,10 +4,52 @@ import {
     Card,
     Button,
 } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import {useHistory} from "react-router-dom"
 
 function Deposit() {
+    const navigate=useHistory()
+    
+    const token= useSelector((state) => state.userdata.token)
+    const token_obj={
+        token:token
+    }
+  
+    //................................................................Verify User...........................................................................
+    useEffect(()=>{
+        const verify_user=async()=>{
+            if(token==null){
+                navigate.push("/")
+              }
+                try {
+                  const myInit = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(token_obj)
+                  }
+                  const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
+                //   const response = await fetch('http://localhost:3001/api/token', myInit)
+                  if (!response.ok) {
+                    throw Error(response.statusText)
+                  }
+                  const data = await response.json()
+                  console.log(data)
+                  if(data.message==="Verification Unsuccessful")
+                  {
+                    navigate.push('/')
+                  }
+                 
+                } catch (error) {
+                  console.log(error)
+                }
+              }
+        verify_user()
+    },[])
+    
+
     const user_email = useSelector((state) => state.userdata.email)
 
     const [deposit, setDeposit]=useState()
@@ -26,6 +68,7 @@ function Deposit() {
           body: JSON.stringify(depositObj)
         }
         const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/deposit', myInit)
+        // const response = await fetch('http://localhost:3001/api/deposit', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }

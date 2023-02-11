@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import Footer from "../components/footer"
 
-// import axios from "axios"
-
 
 function UserRegisteration() {
 
@@ -92,6 +90,7 @@ function UserRegisteration() {
       }
 
       const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/register/user', myInit)
+      // const response = await fetch('http://localhost:3001/api/register/user', myInit)
       if (!response.ok) {
         throw Error(response.statusText)
       }

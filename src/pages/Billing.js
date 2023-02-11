@@ -27,8 +27,51 @@ import {
 // import visa from "../assets/images/visa-logo.png";
 import { useSelector } from "react-redux";
 import Barcode from "react-barcode"
+import { useEffect, useState } from "react";
+import {useHistory} from "react-router-dom"
 
 function Billing() {
+  const navigate=useHistory()
+
+  const token= useSelector((state) => state.userdata.token)
+  const token_obj={
+      token:token
+  }
+
+  //................................................................Verify User...........................................................................
+  useEffect(()=>{
+    
+      const verify_user=async()=>{
+        if(token==null){
+          navigate.push("/")
+        }
+              try {
+                const myInit = {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(token_obj)
+                }
+                const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
+                // const response = await fetch('http://localhost:3001/api/token', myInit)
+                if (!response.ok) {
+                  throw Error(response.statusText)
+                }
+                const data = await response.json()
+                console.log(data)
+                if(data.message==="Verification Unsuccessful")
+                {
+                  navigate.push('/')
+                }
+               
+              } catch (error) {
+                console.log(error)
+              }
+            }
+      verify_user()
+  },[])
+  //......................................................................................................................................................
 
   const barcode1 = useSelector((state) => state.barcode.barcode1)
   const barcode2= useSelector((state) => state.barcode.barcode2)
@@ -423,8 +466,8 @@ function Billing() {
                     </Card>
                   </Col>
                 </Row> */}
-                <Barcode value={barcode1} />
-                <Barcode value={barcode2} />
+                <Barcode displayValue="false" value={barcode1} />
+                <Barcode  value={barcode2} />
               </Card>
             </Col>
           </Row>
@@ -562,6 +605,7 @@ function Billing() {
       </Row> */}
     </>
   );
+    
 }
 
 export default Billing;

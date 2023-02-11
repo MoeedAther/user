@@ -1,12 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import barcodeReducer from '../features/barcode'
-import tokenReducer from '../features/token'
 import userdataReducer from '../features/userdata'
 
-export default configureStore({
-  reducer: {
+
+import { persistReducer,persistStore } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+const persistConfig={
+  key:'persist-store',
+  storage
+}
+
+const reducer=combineReducers({
     barcode:barcodeReducer,
-    token:tokenReducer,
     userdata:userdataReducer
-  }
 })
+
+const persistedReducer=persistReducer(persistConfig,reducer)
+
+const store= configureStore({
+reducer: persistedReducer
+})
+
+
+export default store
+
+// export default configureStore({
+//   reducer: {
+//     barcode:barcodeReducer,
+//     token:tokenReducer,
+//     userdata:userdataReducer
+//   }
+// })

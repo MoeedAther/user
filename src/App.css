@@ -49,3 +49,6 @@
       position: initial  !important;
     }
   }
+  .ant-card-body svg{
+    width: 100% !important;
+  }

@@ -10,42 +10,72 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import { Switch, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Tables from "./pages/Tables";
-import Billing from "./pages/Billing";
-import Rtl from "./pages/Rtl";
-import Profile from "./pages/Profile";
-// import SignUp from "./pages/SignUp";
-// import SignIn from "./pages/SignIn";
-import Main from "./components/layout/Main";
-import UserLogin from "./pages/user_login";
-import UserRegisteration from "./pages/user_registeration";
+
+
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
+
+
+//User Imports
+import Main1 from "./components/layout/Main";
+import Home from "./pages/Home";
+import UserLogin from "./pages/user_login";
+import UserRegisteration from "./pages/user_registeration";
 import Deposit from "./pages/deposit";
+import Tables from "./pages/Tables";
+import Billing from "./pages/Billing";
+import Profile from "./pages/Profile";
+
+
+//Vendor Imports
+import Main2 from "./components2/layout/Main"
+import vHome from "./pages2/vHome.js";
+import vAddproduct from "./pages2/vAddproduct";
+import vProducts from "./pages2/vProducts"
+import vBilling from "./pages2/vBilling.js";
+import vTables from "./pages2/vTables.js";
+
+
+
+import { useSelector } from "react-redux";
 
 function App() {
-  return (
-    <div className="App">
+  const accswitch = useSelector((state) => state.userdata.accswitch)
+  if (accswitch == "user") {
+    return (
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={UserLogin} />
+          <Route path="/user-signup" exact component={UserRegisteration} />
+          <Main1>
+            <Route exact path="/dashboard" component={Home} />
+            <Route exact path="/tables" component={Tables} />
+            <Route exact path="/billing" component={Billing} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/deposit" component={Deposit} />
+            {/* <Redirect from="*" to="/" /> */}
+          </Main1>
+        </Switch>
+      </div>
+    );
+  } else {
+    return (
       <Switch>
-        {/* <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} /> */}
         <Route path="/" exact component={UserLogin} />
         <Route path="/user-signup" exact component={UserRegisteration} />
-        <Main>
-          <Route exact path="/dashboard" component={Home} />
+        <Main2>
+          <Route exact path="/dashboard" component={vHome} />
           <Route exact path="/tables" component={Tables} />
-          <Route exact path="/billing" component={Billing} />
-          <Route exact path="/rtl" component={Rtl} />
+          <Route exact path="/billing" component={vBilling} />
           <Route exact path="/profile" component={Profile} />
-
+          <Route exact path="/Addproduct" component={vAddproduct} />
+          <Route exact path="/Products" component={vProducts} />
           <Route exact path="/deposit" component={Deposit} />
-          {/* <Redirect from="*" to="/" /> */}
-        </Main>
+        </Main2>
       </Switch>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

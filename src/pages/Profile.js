@@ -9,8 +9,9 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {useHistory} from "react-router-dom"
 
 import {
   Row,
@@ -43,18 +44,68 @@ import convesionImg5 from "../assets/images/face-2.jpg";
 import project1 from "../assets/images/home-decor-1.jpeg";
 import project2 from "../assets/images/home-decor-2.jpeg";
 import project3 from "../assets/images/home-decor-3.jpeg";
-import {useHistory} from "react-router-dom"
+import{setAccSwitch, setToken} from "../features/userdata"
 
 function Profile() {
-  const navigate=useHistory()
 
+  
+  const navigate=useHistory()
+  const dispatch = useDispatch()
+
+  const token= useSelector((state) => state.userdata.token)
+  const token_obj={
+      token:token
+  }
+
+  const logout=()=>{
+    dispatch(setToken(null))
+    navigate.push("/")
+  }
+
+  //................................................................Verify User...........................................................................
+  useEffect(()=>{
+
+    if(token==null){
+      navigate.push("/")
+    }
+
+      const verify_user=async()=>{
+              try {
+                const myInit = {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(token_obj)
+                }
+                const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
+                // const response = await fetch('http://localhost:3001/api/token', myInit)
+                if (!response.ok) {
+                  throw Error(response.statusText)
+                }
+                const data = await response.json()
+                console.log(data)
+                if(data.message==="Verification Unsuccessful")
+                {
+                  navigate.push('/')
+                }
+               
+              } catch (error) {
+                console.log(error)
+              }
+            }
+      verify_user()
+  },[])
+  
   //User Data
   const fullname = useSelector((state) => state.userdata.fullname)
   const email = useSelector((state) => state.userdata.email)
+  const user = useSelector((state) => state.userdata.accswitch)
   const phonenumber = useSelector((state) => state.userdata.phonenumber)
 
   const [imageURL, setImageURL] = useState(false);
   const [, setLoading] = useState(false);
+  const [switchBtn, setSwitchBtn]=useState(true)
 
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -86,6 +137,20 @@ function Profile() {
       });
     }
   };
+
+  const handleSwitch=()=>{
+    if(user=="user")
+    {
+      dispatch(setAccSwitch("vendor"))
+      setSwitchBtn(false)
+    }else if(user=="vendor"){
+      dispatch(setAccSwitch("user"))
+      setSwitchBtn(true)
+    }
+    console.log(user)
+    console.log(switchBtn)
+    window.location.reload()
+  }
 
   const pencil = [
     <svg
@@ -195,7 +260,7 @@ function Profile() {
                 justifyContent: "flex-end",
               }}
             >
-              <button className="buttonsets" onClick={()=>{navigate.push("/")}}>Logout</button>
+              <button className="buttonsets" onClick={logout}>Logout</button>
             </Col>
           </Row>
         }
@@ -213,11 +278,11 @@ function Profile() {
                 <h6 className="list-header text-sm text-muted">ACCOUNT</h6>
               </li>
               <li>
-                <Switch defaultChecked />
+                 <Switch defaultChecked={user=="vendor"?true:false} onChange={handleSwitch}/> 
 
-                <span>Email me when someone follows me</span>
+                <span>Switch to vendor</span>
               </li>
-              <li>
+              {/* <li>
                 <Switch />
                 <span>Email me when someone answers me</span>
               </li>
@@ -241,7 +306,7 @@ function Profile() {
               <li>
                 <Switch defaultChecked />
                 <span>Subscribe to newsletter</span>
-              </li>
+              </li> */}
             </ul>
           </Card>
         </Col>
@@ -289,7 +354,7 @@ function Profile() {
           </Card>
         </Col>
         <Col span={24} md={8} className="mb-24">
-          <Card
+          {/* <Card
             bordered={false}
             title={<h6 className="font-semibold m-0">Conversations</h6>}
             className="header-solid h-full"
@@ -312,7 +377,7 @@ function Profile() {
                 </List.Item>
               )}
             />
-          </Card>
+          </Card> */}
         </Col>
       </Row>
       {/* <Card

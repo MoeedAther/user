@@ -34,7 +34,7 @@ import {
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import Echart from "../components/chart/EChart";
-import LineChart from "../components/chart/LineChart";
+import LineChart from "../components/chart/LineChart1";
 
 import ava1 from "../assets/images/logo-shopify.svg";
 import ava2 from "../assets/images/logo-atlassian.svg";
@@ -47,15 +47,59 @@ import team2 from "../assets/images/team-2.jpg";
 import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
-import axios from "axios"
+import PieChart from "../components/chart/PieChart";
+import LineChart1 from "../components/chart/LineChart1";
+import LineChart2 from "../components/chart/LineChart2";
+import LineChart3 from "../components/chart/LineChart3";
+import {useHistory} from "react-router-dom"
 
 
 function Home() {
+  const navigate=useHistory()
   const [userBalance, setUserBalance] = useState()
   let useremail = useSelector((state) => state.userdata.email)
   const useremailObj = {
     email: useremail
   }
+
+  const token= useSelector((state) => state.userdata.token)
+  const token_obj={
+      token:token
+  }
+
+  //................................................................Verify User...........................................................................
+  useEffect(()=>{
+    if(token==null){
+      navigate.push("/")
+    }
+      const verify_user=async()=>{
+              try {
+                const myInit = {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(token_obj)
+                }
+                const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
+                // const response = await fetch('http://localhost:3001/api/token', myInit)
+                if (!response.ok) {
+                  throw Error(response.statusText)
+                }
+                const data = await response.json()
+                console.log(data)
+                if(data.message==="Verification Unsuccessful")
+                {
+                  navigate.push('/')
+                }
+               
+              } catch (error) {
+                console.log(error)
+              }
+            }
+      verify_user()
+  },[])
+  
 
   useEffect(() => { // useEffect lifecycle method runs after final render is completed in DOM
     async function getUserInfo() {
@@ -68,6 +112,7 @@ function Home() {
           body: JSON.stringify(useremailObj)
         }
         const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/userinfo', myInit)
+        // const response = await fetch('http://localhost:3001/api/userinfo', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }
@@ -79,7 +124,7 @@ function Home() {
         }
 
         setUserBalance(kFormatter(data.balance))
-        
+
       } catch (error) {
         console.log(error)
       }
@@ -379,6 +424,7 @@ function Home() {
     },
   };
 
+
   return (
     <>
       <div className="layout-content">
@@ -413,16 +459,29 @@ function Home() {
         </Row>
 
         <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <Echart />
+              <LineChart1 />
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <LineChart />
+              <PieChart />
             </Card>
           </Col>
+        </Row>
+
+        <Row gutter={[24, 0]}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
+            <Card bordered={false} className="criclebox h-full">
+            <LineChart2 />
+            </Card>
+          </Col>
+          {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
+            <Card bordered={false} className="criclebox h-full">
+              <LineChart3 />
+            </Card>
+          </Col> */}
         </Row>
 
         <Row gutter={[24, 0]}>
