@@ -14,37 +14,69 @@ import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
 import lineChart from "./configs/lineChart";
+import {useState, useEffect} from "react"
 
-function LineChart1() {
+function LineChart1(props) {
   const { Title, Paragraph } = Typography;
+  const [year, setYear]=useState()
+
+  useEffect(()=>{
+
+    const currentDate = new Date();
+    setYear(currentDate.getFullYear())
+
+  },[])
+  
+
 
   return (
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Money spent this month</Title>
+          <b><Title level={5}>Money spent in year <span className="bnb2">{year}</span> </Title></b>
           <Paragraph className="lastweek">
-            than last month <span className="bnb2">+46%</span>
+            {/* Products sold in year <span className="bnb2">{year}</span> */}
           </Paragraph>
         </div>
         <div className="sales">
-          <ul>
+          {/* <ul>
             <li>{<MinusOutlined />} This Year</li>
             <li>{<MinusOutlined />} This Month</li>
-          </ul>
+          </ul> */}
         </div>
       </div>
 
-      <ReactApexChart
+      {/* <ReactApexChart
         className="full-width"
         options={lineChart.options}
         series={lineChart.series}
         type="area"
         height={350}
         width={"100%"}
+      /> */}
+
+      <ReactApexChart
+        className="full-width"
+        type="area"
+        height={350}
+        width={"100%"}
+        series={[ 
+          {
+            name:"Yearly Spendings",
+            data: props.yearlyspendings
+          }
+        ]}
+
+        options={{
+          // title:{ text:"Product sold in 2023"},
+          xaxis:{
+            // title:{text:"Money Spent in Months"},
+            categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August', 'Sep', 'Oct', 'Nov', 'Dec']
+          }
+        }}
       />
     </>
   );
 }
 
-export default LineChart1;
+export default LineChart1

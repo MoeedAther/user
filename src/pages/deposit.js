@@ -31,7 +31,7 @@ function Deposit() {
                     body: JSON.stringify(token_obj)
                   }
                   const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/token', myInit)
-                //   const response = await fetch('http://localhost:3001/api/token', myInit)
+                  // const response = await fetch('http://localhost:3001/api/token', myInit)
                   if (!response.ok) {
                     throw Error(response.statusText)
                   }
@@ -118,7 +118,7 @@ function Deposit() {
                         <div class="form-group">
                             <div>
                             <label class=" control-label" for="available_quantity">CVV</label>
-                            <input id="available_quantity" name="available_quantity" placeholder="Cvv" class="form-control input-md" required="" type="text" onChange={(e)=>{}}/>
+                            <input id="available_quantity" name="available_quantity" placeholder="CVV" class="form-control input-md" required="" type="text" onChange={(e)=>{}}/>
                             </div>
                         </div>
                     </div>

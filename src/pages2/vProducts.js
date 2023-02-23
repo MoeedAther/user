@@ -644,9 +644,8 @@ function Tables() {
       try {
         const response = await axios.get("https://blush-bighorn-sheep-kit.cyclic.app/api/products")
         // const response = await axios.get("http://localhost:3001/api/products")
-        console.log(response)
+        console.log(response.data.products)
         setProducts(response.data.products) // Withdraws objects from responce array and stores them in users state
-        console.log()
       } catch (error) {
         console.log(error)
       }

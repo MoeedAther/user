@@ -27,8 +27,10 @@ import {
 // import visa from "../assets/images/visa-logo.png";
 import { useSelector } from "react-redux";
 import Barcode from "react-barcode"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {useHistory} from "react-router-dom"
+import {toPng} from 'html-to-image';
+
 
 function Billing() {
   const navigate=useHistory()
@@ -38,6 +40,21 @@ function Billing() {
       token:token
   }
 
+  //................................................................Download Barcode......................................................................
+  const elementRef = useRef(null);
+
+  const downloadImage = () => {
+
+    const element = elementRef.current;
+    toPng(element)
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = 'barcode.png';
+        link.href = dataUrl;
+        link.click();
+      });
+
+  }
   //................................................................Verify User...........................................................................
   useEffect(()=>{
     
@@ -440,7 +457,7 @@ function Billing() {
                         <h6 className="font-semibold m-0">Barcode</h6>
                       </Col>
                       <Col xs={24} md={12} className="d-flex">
-                        <Button type="primary">Download</Button>
+                        <Button type="primary" onClick={downloadImage}>Download</Button>
                       </Col>
                     </Row>
                   </>
@@ -466,8 +483,10 @@ function Billing() {
                     </Card>
                   </Col>
                 </Row> */}
+                <div ref={elementRef} classNmae="BracodeDiv" style={{display:"flex"}}>
                 <Barcode displayValue="false" value={barcode1} />
-                <Barcode  value={barcode2} />
+                <Barcode displayValue="false" value={barcode2} />
+                </div>
               </Card>
             </Col>
           </Row>

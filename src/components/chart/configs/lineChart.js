@@ -62,6 +62,7 @@ const lineChart = {
         },
       },
       categories: [
+        "Jan",
         "Feb",
         "Mar",
         "Apr",
@@ -71,6 +72,8 @@ const lineChart = {
         "Aug",
         "Sep",
         "Oct",
+        "Nov",
+        "Dec"
       ],
     },
 

@@ -659,6 +659,7 @@ function Tables() {
                 <thead className="bg-light">
                   <tr>
                     <th>Barcode</th>
+                    <th>Date</th>
                     <th>Time</th>
                     <th>Name</th>
                     <th>Category</th>

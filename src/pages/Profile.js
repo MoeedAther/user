@@ -149,7 +149,7 @@ function Profile() {
     }
     console.log(user)
     console.log(switchBtn)
-    window.location.reload()
+    // window.location.reload()
   }
 
   const pencil = [

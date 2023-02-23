@@ -56,13 +56,21 @@ import {useHistory} from "react-router-dom"
 
 function Home() {
   const navigate=useHistory()
-  const [userBalance, setUserBalance] = useState()
+  const [userBalance, setUserBalance] = useState("")
+  const [todayspendings, settodayspendings]=useState("")
+  const [thismonthspendings, setthismonthspendings]=useState("")
+  const [categories, setCategories]=useState([])
+  const [yearlyspendings, setYearlyspendings]=useState([])
+  const [yearlydeposits, setYearlydeposits]=useState([])
+
   let useremail = useSelector((state) => state.userdata.email)
   const useremailObj = {
-    email: useremail
+    email: useremail,
+
   }
 
   const token= useSelector((state) => state.userdata.token)
+
   const token_obj={
       token:token
   }
@@ -124,6 +132,12 @@ function Home() {
         }
 
         setUserBalance(kFormatter(data.balance))
+        settodayspendings(kFormatter(data.todayspendings))
+        setthismonthspendings(kFormatter(data.thismonthspendings))
+        setCategories(data.categories)
+        setYearlyspendings(data.yearlyspendings)
+        setYearlydeposits(data.yearlydeposits)
+        setCategories(data.categories)
 
       } catch (error) {
         console.log(error)
@@ -228,14 +242,14 @@ function Home() {
   const count = [
     {
       today: "Spending Per Month",
-      title: "$53K",
+      title: thismonthspendings?"$"+thismonthspendings:"",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhUlEQVRIie2U0QmAMAxEE3EMcRIdQAdxUXGSDPL8ESmlasUWKfR9hssduY+I/AWwAWsqXWgRgK+6xhPPgLkLPODpDJhcT/UCTES6iAPvMFXtrwIeK4lBVU/f5k6YguwBbWjonviGUMXlV1QDakCpAcDw1ggYQ/Ps79q/YBER+2J+eFTi2QH5gHBCJs9nEQAAAABJRU5ErkJggg==" alt="C"></img>,
       bnb: "bnb2",
     },
     {
       today: "Today’s Spending",
-      title: "$300",
+      title: todayspendings?"$"+todayspendings:"$"+0,
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABmJLR0QA/wD/AP+gvaeTAAAB1klEQVRIie2VPUsdQRiFn1GDWN1bWAmKWFl6SRGCQhBJpyAXQf0DNsYmXUiCRQhikcrGFCFBRQW/KgutFESNHyEQK0FMIEmRJmqlWByLfU3GvbvrLlqJLyyzzJ6ZZ86ZmXvhvjKUyyKW9AD4CDy+RvrTOfck82oklUuaUro69MdWZHAwDRSBM2AE+BUhrQWehzuvhUgqB8YMcA4MA9sx8sj4y1IAJoAeAwyFADmClTclzRPrJAUAoBFoBQR8jZsr0okBxkOA30AfUO1Jt4A3wIckJyUQD9AbctAGdADNvtxAJ0mQK3HZKZoEughO0RCwa58XgD/ASsJ8NYkQSRUxgBagzhtTtHYf2PH6HwID9r4euQRJ7+winUoalNRuz1rMhVv0NIM2TpLmLJFSJ0CntZ/4HxHAF+A4Yl17noMXQCUwD/Q4587jIBtAA9ANfAN+WP+ytVVAgeAQXE7iA+aA3jDgSknKS9oyy38l9XtxtEuatm/vIyKaDUfk178j7Jw7Ap4Cn4E88Bao97TrwCrBZheyOCj5rZGUA5aARwR78Qr47kkKwMvUEcWVpJykTYviSNIzi+h12ojSgsJ7NOoBZm4MiHGkW3MQAcpLGpd0YBc21R/d3awLA2aO47fqtNIAAAAASUVORK5CYII=" alt="D" />,
       bnb: "bnb2",
@@ -248,7 +262,7 @@ function Home() {
     // },
     {
       today: "Balance",
-      title: "$" + userBalance,
+      title: userBalance?"$" + userBalance:"",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie2TvW0CQRCFZyxEAwQ2EiI3uBFwDBWQ0AUhfdCHqYLQCXcX0APW52RWWq3273QgJ37SSnvz5uZv34j8oxbAGmgYjgZYubjqJWhEZPagehtVnYcdADA0chjnZWjAEka5SmJ2VdUY7+wh/q6DVEW1vMMzOviOWsPX94WdigR8Am2o/Ucm8BfzGvPxFw2R/Gz77omq6tNVlEyQGNGHd19qgJDPJkhgIyI/drY1fN83uIjIzT6nqvpezVcoZmkuezsAi1o+lJyPnfEH4A68Aa92P3j/Z3kBVsA1kmDi2gfOnv+XjURq+CKALpK8LfF9VHQq2Ep8HsAYOFqlnd3HJf4XS1zlT6Tg48EAAAAASUVORK5CYII=" alt="F" />,
       bnb: "bnb2",
     },
@@ -461,12 +475,12 @@ function Home() {
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <LineChart1 />
+              <LineChart1 yearlyspendings={yearlyspendings}/>
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <PieChart />
+              <PieChart categories={categories}/>
             </Card>
           </Col>
         </Row>
@@ -474,7 +488,7 @@ function Home() {
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-            <LineChart2 />
+            <LineChart2 yearlydeposits={yearlydeposits}/>
             </Card>
           </Col>
           {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">

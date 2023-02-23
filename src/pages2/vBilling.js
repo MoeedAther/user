@@ -607,6 +607,8 @@ function Tables() {
 
   const navigate=useHistory()
   const token= useSelector((state) => state.userdata.token)
+  const email= useSelector((state) => state.userdata.email)
+
   const token_obj={
       token:token
   }
@@ -645,7 +647,8 @@ function Tables() {
             }
       verify_user()
   },[])
-  
+  //........................................................................................................................................................................
+
 
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
   const [productbarcode, setBarcode] = useState()
@@ -653,7 +656,7 @@ function Tables() {
   const [total, setTotal] = useState(0)
   const [firstbarcode, setFirstBarcode]=useState()
   const [secondbarcode, setSecondBarcode]=useState()
-  const vender_email = useSelector((state) => state.userdata.email)
+  const [quantity, setQuantity]=useState()
 
 
   const inputs = {
@@ -661,16 +664,18 @@ function Tables() {
   }
 
   const transactionInfo={
+    email:email,
     transaction:items,
     userbarcode:firstbarcode+secondbarcode,
     total:total,
-    vender_email:vender_email
   }
 
-// Fetching Product Info
-  const getProductInfo = async (e) => {
+// ......................................................................Fetching Product Info.............................................................................
+  
+const getProductInfo = async (e) => {
     try {
       e.preventDefault();
+
       const myInit = {
         method: 'POST',
         headers: {
@@ -678,24 +683,29 @@ function Tables() {
         },
         body: JSON.stringify(inputs)
       }
+
+
       const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/producttransaction', myInit)
       // const response = await fetch('http://localhost:3001/api/producttransaction', myInit)
       if (!response.ok) {
         throw Error(response.statusText)
       }
       let data = await response.json()
-      setItems([...items, data])
-      console.log(data)
 
-      items.map((elem, index) => {
-        let totalInt = parseInt(elem.products.pprice)
-        console.log(totalInt)
-        setTotal(total + totalInt)
-      })
-      console.log(items)
+      setTotal(total+parseInt(data.products.pprice)*parseInt(quantity))
+      
+      setItems([...items, {apiData: data, quantity: quantity, multiply:parseInt(data.products.pprice)*parseInt(quantity)}])
+
     } catch (error) {
       console.log(error)
     }
+  }
+
+  //........................................................................................................................................................................
+
+  const clearData=()=>{
+    setTotal(0)
+    setItems([])
   }
 
   //Performing Transaction
@@ -713,19 +723,25 @@ function Tables() {
           },
           body: JSON.stringify(transactionInfo)
         }
+        
         const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/transaction', myInit)
         // const response = await fetch('http://localhost:3001/api/transaction', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }
         let data = await response.json()
+
         if(data.response==="Purchase Successfull")
         {
           window.alert("Purchase Successfull")
         }
+
       }else if(data.response==="User Doesnot Exist") {
       window.alert("User Doesnot Exist")
-      }else{
+      }else if("User Account is Empty"){
+        window.alert("Insufficient Balance")
+      }
+      else{
         window.alert("Invalid User Barcode")
       }
 
@@ -751,9 +767,9 @@ function Tables() {
                       <Button type="primary" onClick={getProductInfo}>SUBMIT</Button>
                     </Col>
                   </Row>                   </>}>
-                  <div class="form-group">
+                  <div class="form-group get-product">
                     {/* <label class=" control-label" for="product_description">PRODUCT DESCRIPTION</label> */}
-                    <input type="text" class="form-control" id="product_description" placeholder="Product Barcode" name="product_description" onChange={(e) => { setBarcode(e.target.value) }}></input></div></Card></Col></Row>
+                    <input type="text" class="form-control" id="product_description" placeholder="Product Barcode" name="product_description" onChange={(e) => { setBarcode(e.target.value) }}></input> <input type="text" class="form-control" id="product_description" placeholder="Quantity" name="product_description" onChange={(e)=>{setQuantity(e.target.value)}}></input></div></Card></Col></Row>
             <Row gutter={[24, 0]}>
               <Col xs={24} className="mb-24">
                 <Card className="header-solid h-full ant-card-p-0" title={<>
@@ -765,7 +781,7 @@ function Tables() {
                       <Button type="primary" onClick={performTransaction}>SUBMIT</Button>
                     </Col>
                   </Row>                   </>}>
-                  <div class="form-group">
+                  <div class="form-group d-flex">
                     {/* <label class=" control-label" for="product_description">PRODUCT DESCRIPTION</label> */}
                     <input type="text" class="form-control" id="product_description" placeholder="First Barcode" name="product_description" onChange={(e) => { setFirstBarcode(e.target.value) }}></input>
                     <input type="text" class="form-control" id="product_description" name="product_description" placeholder="Second Barcode" onChange={(e) => { setSecondBarcode(e.target.value) }}></input>
@@ -781,7 +797,7 @@ function Tables() {
                   <>
                     <div onChange={onChange} defaultValue="a" class="btn-group" role="group" aria-label="Basic example">
                       <button type="button" value="a" class="btn leftbutton btn-secondary">Pay</button>
-                      <button type="button" value="b" class="btn middlebutton btn-secondary">Clear</button>
+                      <button type="button" value="b" class="btn middlebutton btn-secondary" onClick={clearData}>Clear</button>
                     </div>
                   </>
                 }
@@ -795,15 +811,16 @@ function Tables() {
                         <th>Category</th>
                         <th>Unit Price</th>
                         <th>Quantity</th>
+                        <th>Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
                         items.map((elem, index) => {
-                          return (<tr><td>{elem.products.pbarcode}</td><td>{elem.products.pname}</td><td>{elem.products.pcategory}</td><td>{elem.products.pprice}</td><td>{elem.products.pquantity}</td></tr>)
+                          return (<tr><td>{elem.apiData.products.pbarcode}</td><td>{elem.apiData.products.pname}</td><td>{elem.apiData.products.pcategory}</td><td>{elem.apiData.products.pprice}</td><td>{elem.quantity}</td><td>{elem.multiply}</td></tr>)
                         })
                       }
-                      <tr><td></td><td></td><td></td><td></td><td>Total={total}</td></tr>
+                      <tr><td></td><td></td><td></td><td></td><td></td><td>Total={total}</td></tr>
                     </tbody>
                   </table>
                 </div>

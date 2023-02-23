@@ -691,6 +691,7 @@ function Tables() {
                 <thead className="bg-light">
                   <tr>
                     <th>Barcode</th>
+                    <th>Date</th>
                     <th>Time</th>
                     <th>Name</th>
                     <th>Category</th>
@@ -702,7 +703,7 @@ function Tables() {
                 <tbody>
                   {
                     transactions.map((item) => {
-                       return (<tr><td>{item.uproductbarcode}</td><td>{item.upurchasetime}</td><td>{item.uproductname}</td><td>{item.uproductcategory}</td><td>{item.uunitprice}</td><td>{item.uunitspurchased}</td><td>{item.upurchasetime}</td><td>{item.utotalamount}</td></tr>)
+                       return (<tr><td>{item.uproductbarcode}</td><td>{item.upurchasetime.substr(0,10)}</td><td>{item.upurchasetime.substr(10,18)}</td><td>{item.uproductname}</td><td>{item.uproductcategory}</td><td>{item.uunitprice}</td><td>{item.uunitspurchased}</td><td>{item.utotalamount}</td></tr>)
                      })
 
                    }

@@ -36,10 +36,10 @@ import {
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import Echart from "../components/chart/EChart";
-import LineChart1 from "../components/chart/LineChart1";
-import LineChart2 from "../components/chart/LineChart2";
-import LineChart3 from "../components/chart/LineChart3";
-import PieChart from "../components/chart/PieChart";
+import LineChart1 from "../components2/chart/LineChart1";
+import LineChart2 from "../components2/chart/LineChart2";
+import LineChart3 from "../components2/chart/LineChart3";
+import PieChart from "../components2/chart/PieChart";
 
 
 import ava1 from "../assets/images/logo-shopify.svg";
@@ -97,15 +97,21 @@ function Home() {
       verify_user()
   },[])
   
-  const vender_email = useSelector((state) => state.userdata.email)
+  const email = useSelector((state) => state.userdata.email)
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
   const [reverse, setReverse] = useState(false);
   const [venderbalance, setVenderBalance] = useState("0");
   const [todayssependings, setTodaysspendings]=useState()
+  const [products, setProducts]=useState()
+  const [categories, setCategories]=useState([])
+  const [monthlyspendings, setMonthlySpendings]=useState()
+  const [yearlyspendings, setYearlyspendings]=useState([])
+  const [yearlydeposits, setYearlydeposits]=useState([])
+
   const { Title, Paragraph } = Typography;
 
   const venderemailobj = {
-    vender_email: vender_email
+    email: email
   }
 
   useEffect(() => { // useEffect lifecycle method runs after final render is completed in DOM
@@ -119,7 +125,7 @@ function Home() {
           body: JSON.stringify(venderemailobj)
         }
         const response = await fetch('https://blush-bighorn-sheep-kit.cyclic.app/api/venderinfo', myInit)
-        // const response = await fetch('http://localhost:3001/api/venderinfo', myInit)
+        // const response = await fetch('http://localhost:3001/api/userinfo', myInit)
         if (!response.ok) {
           throw Error(response.statusText)
         }
@@ -130,7 +136,13 @@ function Home() {
           return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
         }
         setVenderBalance(kFormatter(data.balance))
-        setTodaysspendings(kFormatter(data.dayspending))
+        setTodaysspendings(kFormatter(data.todayspendings))
+        setProducts(data.totalvproducts)
+        setMonthlySpendings(kFormatter(data.thismonthspendings))
+        setCategories(data.categories)
+        setYearlyspendings(data.yearlyspendings)
+        setYearlydeposits(data.yearlydeposits)
+
       } catch (error) {
         console.log(error)
       }
@@ -227,28 +239,28 @@ function Home() {
   const count = [
     {
       today: "Spending Per Month",
-      title: "$53k",
+      title: monthlyspendings?"$"+monthlyspendings:"",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhUlEQVRIie2U0QmAMAxEE3EMcRIdQAdxUXGSDPL8ESmlasUWKfR9hssduY+I/AWwAWsqXWgRgK+6xhPPgLkLPODpDJhcT/UCTES6iAPvMFXtrwIeK4lBVU/f5k6YguwBbWjonviGUMXlV1QDakCpAcDw1ggYQ/Ps79q/YBER+2J+eFTi2QH5gHBCJs9nEQAAAABJRU5ErkJggg=="></img>,
       bnb: "bnb2",
     },
     {
       today: "Today’s Spending",
-      title: "$"+"2.3k",
+      title: todayssependings?"$"+todayssependings:"$"+0,
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABmJLR0QA/wD/AP+gvaeTAAAB1klEQVRIie2VPUsdQRiFn1GDWN1bWAmKWFl6SRGCQhBJpyAXQf0DNsYmXUiCRQhikcrGFCFBRQW/KgutFESNHyEQK0FMIEmRJmqlWByLfU3GvbvrLlqJLyyzzJ6ZZ86ZmXvhvjKUyyKW9AD4CDy+RvrTOfck82oklUuaUro69MdWZHAwDRSBM2AE+BUhrQWehzuvhUgqB8YMcA4MA9sx8sj4y1IAJoAeAwyFADmClTclzRPrJAUAoBFoBQR8jZsr0okBxkOA30AfUO1Jt4A3wIckJyUQD9AbctAGdADNvtxAJ0mQK3HZKZoEughO0RCwa58XgD/ASsJ8NYkQSRUxgBagzhtTtHYf2PH6HwID9r4euQRJ7+winUoalNRuz1rMhVv0NIM2TpLmLJFSJ0CntZ/4HxHAF+A4Yl17noMXQCUwD/Q4587jIBtAA9ANfAN+WP+ytVVAgeAQXE7iA+aA3jDgSknKS9oyy38l9XtxtEuatm/vIyKaDUfk178j7Jw7Ap4Cn4E88Bao97TrwCrBZheyOCj5rZGUA5aARwR78Qr47kkKwMvUEcWVpJykTYviSNIzi+h12ojSgsJ7NOoBZm4MiHGkW3MQAcpLGpd0YBc21R/d3awLA2aO47fqtNIAAAAASUVORK5CYII=" />,
       bnb: "bnb2",
     },
     {
       today: "Total Products",
-      title: "+1,200",
+      title:products?products:"",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAA5ElEQVRIie2UPw6BQRDFfw83IAoHcANCaFzAmRyARsktXEBDwxW0KhR0EskofBLWLutv8iVeNzMv8ybzdhbSDl0GZlYFWgFuDjhE9BxLmoUE1kD+ySFdbCQVvBU7oePJd8zMnuUBZN6c9iG+LuB6sAL8+wMkKeFZiAOsJBXPQc4p1oAFMAUmF/km0HC4IU79jrjfwBiTfQbDDzxwVxTCBm52v/6kwIDTgygl8RIYfkxA0h7oRw5zhfQf2l/gJYEdUDazbGyThFsGtjHknr2OrttPHgEBbaBC/CEegDkwknTvp00hjoSQrN7Qc9Y0AAAAAElFTkSuQmCC"></img>,
       bnb: "redtext",
     },
     {
       today: "Balance",
-      title: "$" + venderbalance,
+      title: venderbalance?"$" + venderbalance:"",
       persent: "",
       icon: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABBElEQVRIie2TvW0CQRCFZyxEAwQ2EiI3uBFwDBWQ0AUhfdCHqYLQCXcX0APW52RWWq3273QgJ37SSnvz5uZv34j8oxbAGmgYjgZYubjqJWhEZPagehtVnYcdADA0chjnZWjAEka5SmJ2VdUY7+wh/q6DVEW1vMMzOviOWsPX94WdigR8Am2o/Ucm8BfzGvPxFw2R/Gz77omq6tNVlEyQGNGHd19qgJDPJkhgIyI/drY1fN83uIjIzT6nqvpezVcoZmkuezsAi1o+lJyPnfEH4A68Aa92P3j/Z3kBVsA1kmDi2gfOnv+XjURq+CKALpK8LfF9VHQq2Ep8HsAYOFqlnd3HJf4XS1zlT6Tg48EAAAAASUVORK5CYII=" />,
       bnb: "bnb2",
@@ -462,12 +474,12 @@ function Home() {
         <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <LineChart1/>
+              <LineChart1 yearlyspendings={yearlyspendings}/>
             </Card>
         </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <PieChart/>
+              <PieChart categories={categories}/>
             </Card>
           </Col>
 
@@ -475,7 +487,7 @@ function Home() {
         <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              <LineChart2 />
+              <LineChart2 yearlydeposits={yearlydeposits}/>
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12} className="mb-24">
@@ -656,5 +668,6 @@ function Home() {
     </>
   );
 }
+
 
 export default Home;

@@ -129,7 +129,7 @@ function UserRegisteration() {
                     <i className="bi bi-facebook"></i>
                   </button>
                 </div>
-                <div className=" mt-4 justify-content-between align-items-center">
+                {/* <div className=" mt-4 justify-content-between align-items-center">
                   <select value={formValues.Register} name="Register" onChange={handleChange} className="form-control form-control-lg color-grey1">
                     <option value="" label="Register as" selected className="selectDefault">Register as</option>
                     <option value="user">User</option>
@@ -137,7 +137,7 @@ function UserRegisteration() {
                   </select>
                   <label className="form-label" for="form3Example4">Register as </label>
                   <p style={{ color: "red", fontSize: "13px" }}>{formErrors.Register}</p>
-                </div>
+                </div> */}
 
                 {/* First Name input */}
                 <div className="form-outline mb-4 mt-3">

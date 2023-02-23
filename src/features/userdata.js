@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userdataSlice = createSlice({
     name: 'userdata',
     initialState: {
-        fullname:null,
-        email:null,
-        phonenumber:null,
+        fullname:"",
+        email:"",
+        phonenumber:"",
         accountbalance:0,
         accswitch:"user",
-        token:null
+        token:null,
     },
     reducers: {
         setFullName: (state, action) => {
